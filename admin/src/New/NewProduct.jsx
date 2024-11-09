@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import './NewProduct.css';
+
 const NewProduct = () => {
   const [enteredInput, setEnteredInput] = useState({
     name: '',
@@ -10,9 +12,11 @@ const NewProduct = () => {
     count: '',
     shortDescription: '',
     longDescription: '',
-    images: [], 
+    images: [],
   });
   const [inputEdit, setInputEdit] = useState(false);
+  const [load, setLoad] = useState(false);
+
   const navigate = useNavigate();
 
   // Handle text input changes
@@ -45,6 +49,9 @@ const NewProduct = () => {
     if (!isValidForm) {
       return;
     }
+
+    setLoad(true);
+
     const formData = new FormData();
 
     // Append text inputs to formData
@@ -63,8 +70,8 @@ const NewProduct = () => {
     try {
       // Send the form data to the server
       const response = await axios.post(
-        // 'https://asm-njs03-server.onrender.com/api/products/add-product',
-        'http://localhost:5000/api/products/add-product',
+        'https://asm-njs03-server.onrender.com/api/products/add-product',
+        // 'http://localhost:5000/api/products/add-product',
         formData,
         {
           headers: {
@@ -72,10 +79,12 @@ const NewProduct = () => {
           },
         }
       );
+
       if (response.status === 200) {
         alert(response.data.message);
         navigate('/products');
       }
+      setLoad(false);
     } catch (error) {
       console.error('Error uploading files:', error);
     }
@@ -83,6 +92,11 @@ const NewProduct = () => {
 
   return (
     <div className="page-wrapper" style={{ display: 'block' }}>
+      {load && (
+        <div className="wrapper_loader">
+          <div className="loader"></div>
+        </div>
+      )}
       <div className="page-breadcrumb">
         <div className="row">
           <form
