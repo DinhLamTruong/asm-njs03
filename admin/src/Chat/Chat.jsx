@@ -4,7 +4,9 @@ import ChatRoomsAPI from '../API/ChatRoomsAPI';
 import './Chat.css';
 
 import io from 'socket.io-client';
-const socket = io('http://localhost:5000', { transports: ['websocket'] });
+const socket = io('https://asm-njs03-server.onrender.com', {
+  transports: ['websocket'],
+});
 
 function Chat(props) {
   const [page, setPage] = useState(1);
@@ -104,7 +106,7 @@ function Chat(props) {
       setLoad(true);
     }, 200);
   };
-  
+
   const handleRoomChange = roomId => {
     setRoomId(roomId);
     setPage(1);

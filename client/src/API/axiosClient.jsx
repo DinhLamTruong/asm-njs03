@@ -4,11 +4,12 @@ import queryString from 'query-string';
 // Set up default config for http requests here
 // Please have a look at here `https://github.com/axios/axios#requestconfig` for the full list of configs
 const axiosClient = axios.create({
-  withCredentials: true,
-  baseURL: 'http://localhost:5000',
+  // baseURL: 'http://localhost:5000',
+  baseURL: 'https://asm-njs03-server.onrender.com',
   headers: {
     'content-type': 'application/json',
   },
+  withCredentials: true,
   paramsSerializer: params => queryString.stringify(params),
 });
 // axios.defaults.withCredentials = true;
