@@ -14,7 +14,6 @@ import { AuthContext } from './Context/AuthContext';
 import UpdateProduct from './Update/UpdateProduct';
 
 function App() {
-  
   const ProtectRoute = ({ children }) => {
     const { user } = React.useContext(AuthContext);
     if (user?.role !== 'admin') {
@@ -40,6 +39,15 @@ function App() {
 
         <Routes>
           <Route
+            path="/"
+            element={
+              <ProtectRoute>
+                <Home />
+              </ProtectRoute>
+            }
+          />
+
+          <Route
             path="/chat"
             element={
               <ProtectRoute>
@@ -47,6 +55,7 @@ function App() {
               </ProtectRoute>
             }
           />
+          
           <Route
             path="/users"
             element={
@@ -55,6 +64,7 @@ function App() {
               </ProtectRoute>
             }
           />
+
           <Route
             path="/products"
             element={
@@ -63,6 +73,7 @@ function App() {
               </ProtectRoute>
             }
           />
+
           <Route
             path="/history"
             element={
@@ -71,7 +82,9 @@ function App() {
               </ProtectRoute>
             }
           />
+
           <Route path="/login" element={<Login />} />
+
           <Route
             path="/new"
             element={
@@ -80,19 +93,12 @@ function App() {
               </ProtectRoute>
             }
           />
+          
           <Route
             path="/edit/:id"
             element={
               <ProtectRoute>
                 <UpdateProduct />
-              </ProtectRoute>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <ProtectRoute>
-                <Home />
               </ProtectRoute>
             }
           />
