@@ -14,8 +14,10 @@ const Login = () => {
   //   const { loading, error, dispatch } = useContext(AuthContext);
   const { dispatch } = useContext(AuthContext);
 
+  const url = 'https://asm-njs03-server.onrender.com/api/auth/admin/login';
+
   const fetchData = async () => {
-    const response = await fetch('https://asm-njs03-server.onrender.com/api/auth/admin/login', {
+    const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -52,6 +54,7 @@ const Login = () => {
                     <i className="fa fa-user"></i>
                   </span>
                   <input
+                    id="email"
                     type="text"
                     className="form-control"
                     placeholder="Email"

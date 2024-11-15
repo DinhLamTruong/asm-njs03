@@ -36,13 +36,15 @@ exports.login = (req, res, next) => {
           res
             .cookie('access_token', token, {
               httpOnly: true,
-              secure: process.env.NODE_ENV === 'production',
+              secure: true,
               sameSite: 'None',
             })
             .status(200)
             .json({ details: { ...otherDetails } });
         } else {
-          return res.status(422).json('Invalid email or password!');
+          return res
+            .status(422)
+            .json({ message: 'Invalid email or password!' });
         }
       });
     })
