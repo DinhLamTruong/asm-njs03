@@ -10,10 +10,18 @@ route.get('/:idProduct', productControllers.getProduct);
 
 route.get('/', productControllers.getProducts);
 
-route.post('/add-product', productControllers.postAddProduct);
+route.post('/add-product', verifyToken, productControllers.postAddProduct);
 
-route.put('/edit-product/:idProduct', productControllers.updateProduct);
+route.put(
+  '/edit-product/:idProduct',
+  verifyToken,
+  productControllers.updateProduct
+);
 
-route.delete('/delete-product/:idProduct', productControllers.deleteProduct);
+route.delete(
+  '/delete-product/:idProduct',
+  verifyToken,
+  productControllers.deleteProduct
+);
 
 module.exports = route;

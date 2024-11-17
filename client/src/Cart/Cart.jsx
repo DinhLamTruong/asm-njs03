@@ -68,7 +68,6 @@ function Cart(props) {
         const query = '?' + queryString.stringify(params);
 
         const response = await CartAPI.getCarts(query);
-
         setCart(response);
 
         getTotal(response);
@@ -133,18 +132,8 @@ function Cart(props) {
 
   //Hàm này dùng để truyền xuống cho component con xử và trả ngược dữ liệu lại component cha
   const onUpdateCount = (getUser, getProduct, getCount) => {
-    // console.log(
-    //   'Count: ' +
-    //     getCount +
-    //     ', idUser: ' +
-    //     getUser +
-    //     ', idProduct: ' +
-    //     getProduct
-    // );
-
     if (localStorage.getItem('id_user')) {
       // user đã đăng nhập
-
       //Sau khi nhận được dữ liệu ở component con truyền lên thì sẽ gọi API xử lý dữ liệu
       const fetchPut = async () => {
         try {
@@ -156,27 +145,20 @@ function Cart(props) {
 
           const query = '?' + queryString.stringify(params);
 
-          await CartAPI.putToCart(query);
+          const response = await CartAPI.putToCart(query);
+          if (response.message === 'update cart success!') {
+            //Sau đó thay đổi state loadAPI và load lại hàm useEffect
+            setLoadAPI(true);
+          }
         } catch (error) {
-          // Kiểm tra xem response từ lỗi có tồn tại không
-          if (error.response) {
-            // kiểm tra status code
-            if (error.response.status === 409) {
-              alert(
-                'Số lượng hàng trong kho không đủ: ' +
-                  error.response.data.message
-              );
-            }
-          } else {
-            console.log('Error without response:', error);
+          // kiểm tra status code
+          if (error.status === 409) {
+            alert('Số lượng hàng trong kho không đủ: ' + error.message);
           }
         }
       };
 
       fetchPut();
-
-      //Sau đó thay đổi state loadAPI và load lại hàm useEffect
-      setLoadAPI(true);
 
       console.log('Ban Da Dang Nhap!');
       alertify.set('notifier', 'position', 'bottom-left');
